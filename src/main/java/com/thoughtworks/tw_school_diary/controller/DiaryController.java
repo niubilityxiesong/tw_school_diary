@@ -31,25 +31,25 @@ public class DiaryController {
     private DiaryService diaryService;
 
     @PostMapping
-    public ResponseEntity add(@RequestBody AddDiaryRequest addDiaryRequest) {
-        int id = diaryService.add(addDiaryRequest);
+    public ResponseEntity addDiary(@RequestBody AddDiaryRequest addDiaryRequest) {
+        int id = diaryService.addDiary(addDiaryRequest);
         return ResponseEntity.created(URI.create("/diaries" + id)).build();
     }
 
     @GetMapping
-    public ResponseEntity<List<DiariesListResponse>> get(@RequestParam int page) {
-        return diaryService.get(page);
+    public ResponseEntity<List<DiariesListResponse>> getDiary(@RequestParam int page) {
+        return ResponseEntity.ok(diaryService.getDiary(page));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable int id) {
-        diaryService.delete(id);
+    public ResponseEntity deleteDiary(@PathVariable int id) {
+        diaryService.deleteDiary(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody Diary updateDiaryRequest, @PathVariable int id) {
-        diaryService.update(updateDiaryRequest, id);
+    public ResponseEntity updateDiary(@RequestBody Diary updateDiaryRequest, @PathVariable int id) {
+        diaryService.updateDiary(updateDiaryRequest, id);
         return ResponseEntity.noContent().build();
     }
 

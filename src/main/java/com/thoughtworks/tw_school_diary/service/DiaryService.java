@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,14 +20,14 @@ public class DiaryService {
     @Autowired
     private DiaryRepository diaryRepository;
 
-    public int add(AddDiaryRequest addDiaryRequest) {
+    public int addDiary(AddDiaryRequest addDiaryRequest) {
         Diary diary = new Diary();
         diary.setContent(addDiaryRequest.getContent());
         diary.setDate(addDiaryRequest.getDate());
         return diaryRepository.save(diary).getId();
     }
 
-    public ResponseEntity<List<DiariesListResponse>> get(int page) {
+    public List<DiariesListResponse> getDiary(int page) {
         int pageSize = 2;
 
         Sort sort = new Sort(Sort.Direction.DESC, "date");
@@ -44,16 +43,16 @@ public class DiaryService {
                             "diary-display-block"));
         }
 
-        return ResponseEntity.ok(diariesList);
+        return diariesList;
     }
 
-    public void delete(int id) {
+    public void deleteDiary(int id) {
         Diary diary = diaryRepository.findById(id).orElseThrow(DiaryNotFoundException::new);
         diaryRepository.delete(diary);
     }
 
 
-    public void update(Diary updateDiary, int id) {
+    public void updateDiary(Diary updateDiary, int id) {
         Diary diary = diaryRepository.findById(id).orElseThrow(DiaryNotFoundException::new);
         updateDiary.setId(diary.getId());
         diaryRepository.save(updateDiary);
