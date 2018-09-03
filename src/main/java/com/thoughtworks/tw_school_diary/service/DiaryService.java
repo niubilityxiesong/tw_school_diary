@@ -45,7 +45,7 @@ public class DiaryService {
             );
         }
 
-        return new DiaryListByPageResponse(diariesList, pageDiary.getTotalElements());
+        return new DiaryListByPageResponse(diariesList, pageDiary.getTotalElements(), page);
     }
 
     public void deleteDiary(int id) {

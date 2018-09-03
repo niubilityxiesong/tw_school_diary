@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "diary")
@@ -17,5 +18,5 @@ public class Diary {
     private int id;
 
     private String content;
-    private String date;
+    private LocalDate date;
 }

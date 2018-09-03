@@ -8,9 +8,11 @@ import java.util.List;
 public class DiaryListByPageResponse {
     List<DiaryResponse> diaryResponseList;
     long totalDiaries;
+    int page;
 
-    public DiaryListByPageResponse(List<DiaryResponse> diaryResponseList, long totalDiaries) {
+    public DiaryListByPageResponse(List<DiaryResponse> diaryResponseList, long totalDiaries, int page) {
         this.diaryResponseList = diaryResponseList;
         this.totalDiaries = totalDiaries;
+        this.page = page;
     }
 }
