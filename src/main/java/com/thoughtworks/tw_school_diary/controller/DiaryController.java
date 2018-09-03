@@ -53,5 +53,5 @@ public class DiaryController {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public void DiaryNotFoundException(DiaryNotFoundException ex){}
+    public void diaryNotFoundException(DiaryNotFoundException ex){}
 }
