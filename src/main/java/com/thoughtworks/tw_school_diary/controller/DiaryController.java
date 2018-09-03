@@ -1,6 +1,5 @@
 package com.thoughtworks.tw_school_diary.controller;
 
-import com.thoughtworks.tw_school_diary.controller.response.DiariesListResponse;
 import com.thoughtworks.tw_school_diary.entity.Diary;
 import com.thoughtworks.tw_school_diary.controller.request.AddDiaryRequest;
 import com.thoughtworks.tw_school_diary.exception.DiaryNotFoundException;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
-import java.util.List;
 
 @RequestMapping("/diaries")
 @RestController
@@ -37,8 +35,8 @@ public class DiaryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<DiariesListResponse>> getDiary(@RequestParam int page) {
-        return ResponseEntity.ok(diaryService.getDiary(page));
+    public ResponseEntity getDiary(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "2") int pageSize) {
+        return ResponseEntity.ok(diaryService.getDiary(page,pageSize));
     }
 
     @DeleteMapping("/{id}")

@@ -1,10 +1,11 @@
 package com.thoughtworks.tw_school_diary.service;
 
-import com.thoughtworks.tw_school_diary.controller.response.DiariesListResponse;
+import com.thoughtworks.tw_school_diary.controller.response.DiaryListByPageResponse;
 import com.thoughtworks.tw_school_diary.entity.Diary;
 import com.thoughtworks.tw_school_diary.controller.request.AddDiaryRequest;
 import com.thoughtworks.tw_school_diary.exception.DiaryNotFoundException;
 import com.thoughtworks.tw_school_diary.repository.DiaryRepository;
+import com.thoughtworks.tw_school_diary.controller.response.DiaryResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Service
 public class DiaryService {
@@ -27,23 +29,23 @@ public class DiaryService {
         return diaryRepository.save(diary).getId();
     }
 
-    public List<DiariesListResponse> getDiary(int page) {
-        int pageSize = 2;
+    public DiaryListByPageResponse getDiary(int page, int pageSize) {
 
         Sort sort = new Sort(Sort.Direction.DESC, "date");
-        PageRequest pageRequest = new PageRequest(page, pageSize, sort);
+        PageRequest pageRequest = PageRequest.of(page, pageSize, sort);
         Page<Diary> pageDiary = diaryRepository.findAll(pageRequest);
         List<Diary> diaries = pageDiary.getContent();
-        List<DiariesListResponse> diariesList = new ArrayList<>();
+        List<DiaryResponse> diariesList = new ArrayList<>();
         for (Diary diary : diaries) {
             diariesList.add(
-                    new DiariesListResponse(diary.getId(),
+                    new DiaryResponse(diary.getId(),
                             diary.getDate(),
                             diary.getContent(),
-                            "diary-display-block"));
+                            "diary-display-block")
+            );
         }
 
-        return diariesList;
+        return new DiaryListByPageResponse(diariesList, pageDiary.getTotalElements());
     }
 
     public void deleteDiary(int id) {
